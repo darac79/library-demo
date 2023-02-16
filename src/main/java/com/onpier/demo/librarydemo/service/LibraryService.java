@@ -147,7 +147,8 @@ public class LibraryService
                boolean overlapLeft = borrowedFrom.isBefore(fromIncl) && (borrowedTo == null || borrowedTo.isBefore(toExcl));
                boolean overlapRight = (borrowedFrom.isAfter(fromIncl) || borrowedFrom.isEqual(fromIncl)) && (borrowedTo == null || borrowedTo.isAfter(toExcl));
                boolean overlapInsight = (borrowedFrom.isAfter(fromIncl) || borrowedFrom.isEqual(fromIncl)) && (borrowedTo != null && borrowedTo.isBefore(toExcl));
-               return overlapLeft || overlapRight || overlapInsight;
+               boolean overlapAround = (borrowedFrom.isBefore(fromIncl) || borrowedFrom.isEqual(fromIncl)) && (borrowedTo != null && borrowedTo.isAfter(toExcl));
+               return overlapLeft || overlapRight || overlapInsight || overlapAround;
             })
             .map(Borrowed::getBook)
             .distinct()
